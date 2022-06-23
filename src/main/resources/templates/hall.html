@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Кинотеатр</title>
+    <th:block th:include="blocks/css :: head"/>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Кинотеатр</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" th:href="@{/index}">Выбрать сеанс</a>
+                <a class="nav-item nav-link active" href="#">Купить билет<span class="sr-only">(current)</span></a>
+                <th:block th:include="blocks/enter :: div"/>
+            </div>
+        </div>
+    </nav>
+    <div><h5>Бронирование места на сеанс</h5></div>
+    <h3><div th:text="${film.filmName}"></div></h3>
+    <div class="row pt-3">
+        <form th:action="@{/confirmBuyTicket}" method="POST">
+            <table class="table table-bordered table-striped" >
+                <thead>
+                <tr>
+                    <th style="width: 240px">Ряд \ Место</th>
+                    <th style="width: 240px">1</th>
+                    <th style="width: 240px">2</th>
+                    <th style="width: 240px">3</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <div class="card-body">
+                        <tr class="active" th:each="row : ${m}">
+                            <th style="width: 120px;" th:text="${row[0][0]}">Ряд</th>
+                            <td th:each="seat : ${row}">
+                                <span class="badge badge-success" th:if="${seat[1]==0}" >продано</span>
+                                <span class="badge badge-secondary text-white" th:if="${seat[1]!=0}">
+                                    <input th:text="' Ряд ' + ${seat[0]} + ', Mесто ' + ${seat[1]}"
+                                           type="radio" name="generalCell"
+                                           th:value="${seat[0]}
+                                           + C + ${seat[1]}
+                                           + F + ${film.filmId}
+                                           + U + ${user.userId}"
+                                           required/>
+                                </span>
+                            </td>
+                        </tr>
+                    </div>
+                </tbody>
+            </table>
+            <div class="row float-right">
+                <button type="submit" class="btn btn-primary">Купить</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
