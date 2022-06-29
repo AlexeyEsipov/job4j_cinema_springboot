@@ -5,6 +5,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class FilmDBStore {
     public Collection<Film> findAll() {
         Collection<Film> films = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(
+            PreparedStatement ps = cn.prepareStatement(
                      "SELECT * FROM films")) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -44,28 +45,30 @@ public class FilmDBStore {
         return films;
     }
 
-    public Film findById(int id)  {
+    public Optional<Film> findById(int id) {
         Film film = new Film();
+        Optional<Film> result = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(
-                     "SELECT * FROM films WHERE id = ?")) {
+            PreparedStatement ps = cn.prepareStatement(
+                    "SELECT * FROM films WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     film.setFilmId(it.getInt("id"));
-                     film.setFilmName(it.getString("name"));
+                    film.setFilmName(it.getString("name"));
+                    result = Optional.of(film);
                 }
             }
         } catch (SQLException e) {
             LOG.error("Exception in FilmDBStore#findById(int id)", e);
         }
-        return film;
+        return result;
     }
 
-    public Optional<Film> add(Film film)  {
+    public Optional<Film> add(Film film) {
         Optional<Film> result = Optional.empty();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement(
+             PreparedStatement ps = cn.prepareStatement(
                      "INSERT INTO films (name) VALUES (?);",
                      PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, film.getFilmName());

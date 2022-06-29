@@ -21,10 +21,10 @@ public class FilmService {
     }
 
     public Film findById(int id) {
-        return store.findById(id);
+        return store.findById(id).orElseThrow();
     }
 
     public Film setFilmName(Film film) {
-        return store.findById(film.getFilmId());
+        return store.findById(film.getFilmId()).orElseThrow();
     }
 }
