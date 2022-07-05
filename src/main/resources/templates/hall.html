@@ -33,24 +33,24 @@
                 <thead>
                 <tr>
                     <th style="width: 240px">Ряд \ Место</th>
-                    <th style="width: 240px">1</th>
-                    <th style="width: 240px">2</th>
-                    <th style="width: 240px">3</th>
+                    <th:block th:each="seat, statSeat : ${m[0]}">
+                        <th style="width: 120px;" th:text="${statSeat.count}"/>
+                    </th:block>
                 </tr>
                 </thead>
                 <tbody>
                     <div class="card-body">
-                        <tr class="active" th:each="row : ${m}">
-                            <th style="width: 120px;" th:text="${row[0][0]}">Ряд</th>
-                            <td th:each="seat : ${row}">
-                                <span class="badge badge-success" th:if="${seat[1]==0}" >продано</span>
-                                <span class="badge badge-secondary text-white" th:if="${seat[1]!=0}">
-                                    <input th:text="' Ряд ' + ${seat[0]} + ', Mесто ' + ${seat[1]}"
+                        <tr class="active" th:each="row, statRow : ${m}">
+                            <th style="width: 120px;" th:text="${statRow.count}"/>
+                            <td th:each="seat, statSeat : ${row}">
+                                <span class="badge badge-success" th:if="${seat!=0}" >продано</span>
+                                <span class="badge badge-secondary text-white" th:if="${seat==0}">
+                                    <input th:text="' Ряд ' + ${statRow.count} + ', Mесто ' + ${statSeat.count}"
                                            type="radio" name="generalCell"
-                                           th:value="${seat[0]}
-                                           + C + ${seat[1]}
-                                           + F + ${film.filmId}
-                                           + U + ${user.userId}"
+                                           th:value="${statRow.count}
+                                                    + C + ${statSeat.count}
+                                                    + F + ${film.filmId}
+                                                    + U + ${user.userId}"
                                            required/>
                                 </span>
                             </td>

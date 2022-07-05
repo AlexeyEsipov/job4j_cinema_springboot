@@ -18,7 +18,7 @@ public class HallControllerTest {
     public void whenGetHall() {
         Film film = new Film();
         User user = new User();
-        int[][][] hall = new int[3][3][2];
+        int[][] hall = new int[2][];
         Model model = mock(Model.class);
         HttpSession session = mock(HttpSession.class);
         FilmService filmService = mock(FilmService.class);

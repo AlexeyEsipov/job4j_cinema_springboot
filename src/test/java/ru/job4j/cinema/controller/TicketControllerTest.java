@@ -22,7 +22,7 @@ public class TicketControllerTest {
     @Test
     public void whenCreateTicket() {
         Film film = new Film();
-        int[][][] hall = new int[3][][];
+        int[][] hall = new int[2][];
         User user = new User();
         Ticket ticket = new Ticket();
         Model model = mock(Model.class);
