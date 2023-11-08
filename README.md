@@ -1,5 +1,6 @@
 # CinemaHall
 
+![github actions](https://github.com/AlexeyEsipov/job4j_cinema_springboot/actions/workflows/maven.yml/badge.svg)
 
 Это приложение можно использовать для заказа билетов в кинотеатре.
 ## Используемые технологии:
