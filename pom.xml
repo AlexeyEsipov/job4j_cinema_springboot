@@ -6,7 +6,7 @@
   <artifactId>job4j_cinema</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>job4j_cinema</name>
-  <description>A simple job4j_cinema.</description>
+  <description>A simple cinema.</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
